@@ -5,7 +5,7 @@ import requests
 # from dotenv import load_dotenv
 from qdrant_client import QdrantClient, models
 from backend.utils.embeddings import embed_text
-from config import PROVIDER, OLLAMA_URL, QDRANT_URL, QDRANT_API_KEY, COLLECTION
+from rag_company_assitant_v3.config import PROVIDER, OLLAMA_URL, QDRANT_URL, QDRANT_API_KEY, COLLECTION
 
 def hybrid_search(
     question: str,

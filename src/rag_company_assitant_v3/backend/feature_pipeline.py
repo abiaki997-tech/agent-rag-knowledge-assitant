@@ -16,7 +16,7 @@ start_time = datetime.datetime.now(timezone.utc)
 from backend.utils.embeddings import create_embeddings
 from backend.utils.read_clean_docs import read_and_clean_pdf
 from backend.utils.chunk_docs import chunk_text
-from config import PROVIDER,OLLAMA_URL,QDRANT_URL,QDRANT_API_KEY,COLLECTION
+from rag_company_assitant_v3.config import PROVIDER,OLLAMA_URL,QDRANT_URL,QDRANT_API_KEY,COLLECTION
 
 logger = logging.getLogger(__name__)
 

@@ -4,7 +4,7 @@ import os
 import requests
 from google import genai
 from google.genai import types
-from config import PROVIDER, OLLAMA_URL, EMBEDDING_MODEL, GEMINI_API_KEY
+from rag_company_assitant_v3.config import PROVIDER, OLLAMA_URL, EMBEDDING_MODEL, GEMINI_API_KEY
 
 PROVIDER = PROVIDER
 OLLAMA_URL = OLLAMA_URL

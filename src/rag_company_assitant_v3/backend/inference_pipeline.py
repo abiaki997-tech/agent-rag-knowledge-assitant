@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from google import genai
 
 from backend.utils.hybrid_search import hybrid_search
-from config import PROVIDER,OLLAMA_URL,TEXT_GENERATION_MODEL,GEMINI_API_KEY
+from rag_company_assitant_v3.config import PROVIDER,OLLAMA_URL,TEXT_GENERATION_MODEL,GEMINI_API_KEY
 
 
 def generate_answer(question: str, context: str) -> str:
