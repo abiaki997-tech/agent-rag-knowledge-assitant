@@ -12,3 +12,4 @@ wheels/
 .zen
 .mypy_cache/
 .env.*
+.streamlit/secrets.toml

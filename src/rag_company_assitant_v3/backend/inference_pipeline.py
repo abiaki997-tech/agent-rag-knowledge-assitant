@@ -5,7 +5,12 @@ from dotenv import load_dotenv
 from google import genai
 
 from backend.utils.hybrid_search import hybrid_search
-from rag_company_assitant_v3.config import PROVIDER,OLLAMA_URL,TEXT_GENERATION_MODEL,GEMINI_API_KEY
+from rag_company_assitant_v3.config import (
+    PROVIDER,
+    OLLAMA_URL,
+    TEXT_GENERATION_MODEL,
+    GEMINI_API_KEY,
+)
 
 
 def generate_answer(question: str, context: str) -> str:
@@ -60,42 +65,47 @@ def generate_answer(question: str, context: str) -> str:
 def inference_pipeline(
     question: str,
     session_id: str,
-    top_k: int = 5,
+    top_k: int = 3,
 ) -> tuple[str, list[str]]:
-    print(f"Starting inference pipeline for session: {session_id} with question: {question}")
-    results = hybrid_search(
-        question=question,
-        session_id=session_id,
-        top_k=top_k,
-    ) or []
-    print(f"Hybrid search returned {len(results)} results for session: {session_id} with question: {question}")
-    if not results:
-        print(f"No matching document chunks found for session: {session_id} with question: {question}")
-        return (
-            "No matching document chunks found. Please upload and process a PDF first.",
-            [],
+    print(
+        f"Starting inference pipeline for session: {session_id} with question: {question}"
+    )
+    results = (
+        hybrid_search(
+            question=question,
+            session_id=session_id,
+            top_k=top_k,
         )
+        or []
+    )
+    print(
+        f"Hybrid search returned {len(results)} results for session: {session_id} with question: {question}"
+    )
+    if not results:
+        print(
+            f"No matching document chunks found for session: {session_id} with question: {question}"
+        )
+    if not results:
+        return [], []
 
-    chunks = [
-        item for item in results
-        if item.get("text")
-    ]
+    chunks = [item for item in results if item.get("text")]
 
     if not chunks:
-        return "No usable text was found in the matching chunks.", []
+        return [], []
 
     context = "\n\n".join(
-        f"[Source: {item.get('source', 'Unknown')}]\n{item['text']}"
-        for item in chunks
+        f"[Source: {item.get('source', 'Unknown')}]\n{item['text']}" for item in chunks
     )
 
-    sources = list(dict.fromkeys(
-        item["source"]
-        for item in chunks
-        if item.get("source")
-    ))
+    sources = list(
+        dict.fromkeys(item["source"] for item in chunks if item.get("source"))
+    )
 
-    print(f"Generating answer for session: {session_id} with question: {question} using context of length {len(context)}")
+    print(
+        f"Generating answer for session: {session_id} with question: {question} using context of length {len(context)}"
+    )
     answer = generate_answer(question, context)
-    print(f"Answer generated for session: {session_id} with question: {question}: {answer}")
+    print(
+        f"Answer generated for session: {session_id} with question: {question}: {answer}"
+    )
     return answer, sources

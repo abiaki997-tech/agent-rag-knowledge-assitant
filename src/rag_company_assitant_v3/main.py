@@ -12,7 +12,7 @@ from ui.upload import MAX_FILES, render_upload
 load_dotenv(".env")
 
 st.set_page_config(
-    page_title="RAG Document Assistant",
+    page_title="Agentic RAG Document Assistant",
     page_icon="📚",
     layout="wide",
 )
@@ -23,7 +23,7 @@ if "session_id" not in st.session_state:
 if "_extracting" not in st.session_state:
     st.session_state["_extracting"] = False
 
-st.title("📚 RAG Document Assistant")
+st.title("📚 Agentic RAG Document Assistant")
 st.caption("Upload PDFs and ask questions about their contents.")
 
 with st.sidebar:
